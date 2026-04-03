@@ -12,6 +12,7 @@ WORKDIR /app
 RUN addgroup -S spring && adduser -S spring -G spring
 COPY --from=builder /build/target/*.jar app.jar
 USER spring:spring
+# Render (and similar) set PORT; must listen on 0.0.0.0:$PORT or health checks fail
 EXPOSE 8080
 ENV JAVA_OPTS=""
-ENTRYPOINT ["sh", "-c", "exec java $JAVA_OPTS -jar /app/app.jar"]
+ENTRYPOINT ["sh", "-c", "exec java $JAVA_OPTS -Dserver.address=0.0.0.0 -Dserver.port=${PORT:-8080} -jar /app/app.jar"]

@@ -1,0 +1,6 @@
+# Copy to application-local.properties in this same folder (gitignored).
+# Overrides SPRING_DATASOURCE_* for local development only.
+#
+# spring.datasource.url=jdbc:postgresql://db.YOUR_PROJECT_REF.supabase.co:5432/postgres?sslmode=require
+# spring.datasource.username=postgres
+# spring.datasource.password=your_database_password

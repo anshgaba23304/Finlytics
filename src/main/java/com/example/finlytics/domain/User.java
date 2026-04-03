@@ -15,6 +15,7 @@ import java.time.Instant;
 @Entity
 @Table(
 		name = "users",
+		schema = "finlytics",
 		uniqueConstraints = {
 				@UniqueConstraint(name = "uk_users_username", columnNames = "username"),
 				@UniqueConstraint(name = "uk_users_email", columnNames = "email")

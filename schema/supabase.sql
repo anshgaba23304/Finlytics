@@ -1,5 +1,7 @@
--- Finlytics — PostgreSQL schema for Supabase (public schema)
+-- Finlytics — PostgreSQL (schema finlytics; JPA maps tables here, not public.*)
 -- Run this in: Supabase Dashboard → SQL Editor → New query → Run
+--
+CREATE SCHEMA IF NOT EXISTS finlytics;
 --
 -- Matches JPA entities:
 --   com.example.finlytics.domain.User        → users

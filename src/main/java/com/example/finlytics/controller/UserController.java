@@ -1,5 +1,6 @@
 package com.example.finlytics.controller;
 
+import com.example.finlytics.dto.ChangePasswordRequest;
 import com.example.finlytics.dto.CreateUserRequest;
 import com.example.finlytics.dto.UpdateUserRequest;
 import com.example.finlytics.dto.UserResponse;
@@ -35,6 +36,12 @@ public class UserController {
 		var u = SecurityUtils.requireCurrentUser().getDomainUser();
 		return ResponseEntity.ok(new UserResponse(
 				u.getId(), u.getUsername(), u.getEmail(), u.getRole(), u.isActive(), u.getCreatedAt()));
+	}
+
+	@PatchMapping("/me/password")
+	public ResponseEntity<Void> changeOwnPassword(@Valid @RequestBody ChangePasswordRequest request) {
+		userService.changeOwnPassword(SecurityUtils.requireCurrentUser().getUsername(), request);
+		return ResponseEntity.noContent().build();
 	}
 
 	@GetMapping

@@ -1,6 +1,7 @@
 package com.example.finlytics.service;
 
 import com.example.finlytics.domain.User;
+import com.example.finlytics.dto.ChangePasswordRequest;
 import com.example.finlytics.dto.CreateUserRequest;
 import com.example.finlytics.dto.UpdateUserRequest;
 import com.example.finlytics.dto.UserResponse;
@@ -78,6 +79,20 @@ public class UserService {
 			throw new NotFoundException("User not found: " + id);
 		}
 		userRepository.deleteById(id);
+	}
+
+	@Transactional
+	public void changeOwnPassword(String username, ChangePasswordRequest request) {
+		User u = userRepository.findByUsername(username)
+				.orElseThrow(() -> new NotFoundException("User not found: " + username));
+		if (!passwordEncoder.matches(request.currentPassword(), u.getPasswordHash())) {
+			throw new IllegalArgumentException("Current password is incorrect");
+		}
+		if (request.currentPassword().equals(request.newPassword())) {
+			throw new IllegalArgumentException("New password must be different from the current password");
+		}
+		u.setPasswordHash(passwordEncoder.encode(request.newPassword()));
+		userRepository.save(u);
 	}
 
 	private UserResponse toResponse(User u) {
